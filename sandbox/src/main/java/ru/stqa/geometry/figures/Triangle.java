@@ -1,23 +1,23 @@
 package ru.stqa.geometry.figures;
 
 public class Triangle {
-    public static void printTriangleArea(double a, double b, double c) {
-        String text = String.format("Площадь треугольника со сторонами %f, %f и %f равна %f", a, b, c, triangleArea(a, b, c));
+    public static void printArea(double a, double b, double c) {
+        String text = String.format("Площадь треугольника со сторонами %.2f, %.2f и %.2f равна %.2f", a, b, c, Area(a, b, c));
         System.out.println(text);
     }
 
-    public static void printTrianglePerimetr(double a, double b, double c) {
+    public static void printPerimetr(double a, double b, double c) {
 
-        String text = String.format("Периметр треугольника со сторонами %f, %f и %f равен %f", a, b, c, trianglePerimetr(a, b, c));
+        String text = String.format("Периметр треугольника со сторонами %.2f, %.2f и %.2f равен %.2f", a, b, c, Perimetr(a, b, c));
         System.out.println(text);
     }
 
-    private static double triangleArea(double a, double b, double c) {
-        double semiPerimetr = trianglePerimetr(a, b, c) / 2;
+    public static double Area(double a, double b, double c) {
+        double semiPerimetr = Perimetr(a, b, c) / 2;
         return Math.sqrt(semiPerimetr * (semiPerimetr - a) * (semiPerimetr - b) * (semiPerimetr - c));
     }
 
-    private static double trianglePerimetr(double a, double b, double c) {
+    public static double Perimetr(double a, double b, double c) {
         return a + b + c;
     }
 }
