@@ -2,6 +2,15 @@ package ru.stqa.geometry.figures;
 
 public record Triangle(double a, double b, double c) {
 
+    public Triangle {
+        if (a < 0 || b < 0 || c < 0) {
+            throw new IllegalArgumentException("Сторона треугольника не может быть отрицательной");
+        }
+        if (a + b <= c || b + c <= a || a + c <= b) {
+            throw new IllegalArgumentException("Сумма двух сторон не может быть меньше третьей стороны");
+        }
+    }
+
 
     public static void printArea(Triangle t) {
         String text = String.format("Площадь треугольника со сторонами %f, %f и %f равна %f", t.a, t.b, t.c, t.area());
