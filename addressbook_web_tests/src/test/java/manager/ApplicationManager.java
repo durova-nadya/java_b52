@@ -13,6 +13,8 @@ public class ApplicationManager {
 
     private GroupHelper groups;
 
+    private ContactHelper contacts;
+
     public void init() {
         if (driver == null) {
             driver = new ChromeDriver();
@@ -38,6 +40,14 @@ public class ApplicationManager {
         }
         return groups;
     }
+
+    public ContactHelper contacts() {
+        if (contacts == null) {
+            contacts = new ContactHelper(this);
+        }
+        return contacts;
+    }
+
     public boolean isElementPresent(By locator) {
         try {
             driver.findElement(locator);
