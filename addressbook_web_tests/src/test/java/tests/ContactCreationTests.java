@@ -5,6 +5,13 @@ import org.junit.jupiter.api.Test;
 
 public class ContactCreationTests extends TestBase {
 
+
+    @Test
+    public void canCreateContact() {
+        app.contacts().createContact(new ContactData("Ann", "Marshak", "Moscow", "marshak_ann@ya.ru")
+                );
+    }
+
     @Test
     public void canCreateContactWithEmptyName() {
         app.contacts().createContact(new ContactData());
