@@ -14,7 +14,7 @@ public class ContactCreationTests extends TestBase {
 
     @Test
     public void canCreateContact() {
-        app.contacts().createContact(new ContactData("Ann", "Marshak", "Moscow", "marshak_ann@ya.ru")
+        app.contacts().createContact(new ContactData("", "Ann", "Marshak", "Moscow", "marshak_ann@ya.ru")
                 );
     }
 
@@ -24,13 +24,17 @@ public class ContactCreationTests extends TestBase {
             for (var lastname : List.of("", "last name")) {
                 for (var address : List.of("", "address")) {
                     for (var email : List.of("", "email")) {
-                        result.add(new ContactData(firstname, lastname, address, email));
+                        result.add(new ContactData().withFirstName(firstname).withLastName(lastname).withAddress(address).withEmail(email));
                     }
                 }
             }
         }
         for (int i = 0; i < 5; i++) {
-            result.add(new ContactData(randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i  * 10)));
+            result.add(new ContactData()
+                    .withFirstName(randomString(i * 10))
+                    .withLastName(randomString(i * 10))
+                    .withAddress(randomString(i * 10))
+                    .withEmail(randomString(i  * 10)));
         }
         return result;
     }
