@@ -74,15 +74,18 @@ public class ContactHelper extends HelperBase {
     }
 
     public List<ContactData> getList() {
+        openHomePage();
         var contacts = new ArrayList<ContactData>();
         var rows = manager.driver.findElements(By.name("entry"));
-        for (var row : rows) {
-            var lastname = row.findElement(By.xpath("//td[2]")).getText();
-            var firstname = row.findElement(By.xpath("//td[3]")).getText();
-            var checkbox = row.findElement(By.name("selected[]"));
-            var id = checkbox.getAttribute("value");
-            contacts.add(new ContactData().withId(id).withFirstName(firstname).withLastName(lastname));
-        }
+            for (var row : rows) {
+                var lastname = row.findElement(By.cssSelector(":nth-child(2)")).getText();
+                var firstname = row.findElement(By.cssSelector(":nth-child(3)")).getText();;
+                var address = row.findElement(By.cssSelector(":nth-child(4)")).getText();;
+                var email = row.findElement(By.cssSelector(":nth-child(5)")).getText();;
+                var checkbox = row.findElement(By.name("selected[]"));
+                var id = checkbox.getDomAttribute("value");
+                    contacts.add(new ContactData().withId(id).withFirstName(firstname).withLastName(lastname).withAddress(address).withEmail(email));
+            }
         return contacts;
     }
 }

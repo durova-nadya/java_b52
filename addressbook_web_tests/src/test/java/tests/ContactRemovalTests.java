@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class ContactRemovalTests extends TestBase {
@@ -17,7 +16,6 @@ public class ContactRemovalTests extends TestBase {
             );
         }
         var oldContacts = app.contacts().getList();
-        //var oldContacts = app.contacts().getList();
         var rnd = new Random();
         var index = rnd.nextInt(oldContacts.size());
         app.contacts().removeContact(oldContacts.get(index));

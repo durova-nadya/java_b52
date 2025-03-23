@@ -106,7 +106,7 @@ public class GroupHelper extends HelperBase {
         for (var span : spans) {
             var name = span.getText();
             var checkbox = span.findElement(By.name("selected[]"));
-            var id = checkbox.getAttribute("value");
+            var id = checkbox.getDomAttribute("value");
             groups.add(new GroupData().withId(id).withName(name));
         }
         return groups;
