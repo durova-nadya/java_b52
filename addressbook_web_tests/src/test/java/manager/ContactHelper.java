@@ -19,6 +19,24 @@ public class ContactHelper extends HelperBase {
         openHomePage();
     }
 
+
+    public void modifyContact(int index, ContactData modifiedContact) {
+        openHomePage();
+        initContactModification(index+1);
+        fillContactForm(modifiedContact);
+        submitContactModification();
+        openHomePage();
+    }
+
+
+    private void submitContactModification() {
+        click(By.name("update"));
+    }
+
+    private void initContactModification(int index) {
+        click(By.xpath(String.format("(//img[@alt='Edit'])[%s]", index)));
+    }
+
     public void removeContact(ContactData contact) {
         openHomePage();
         selectContact(contact);
