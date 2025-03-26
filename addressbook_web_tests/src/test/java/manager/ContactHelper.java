@@ -22,7 +22,7 @@ public class ContactHelper extends HelperBase {
 
     public void modifyContact(int index, ContactData modifiedContact) {
         openHomePage();
-        initContactModification(index+1);
+        initContactModification(index);
         fillContactForm(modifiedContact);
         submitContactModification();
         openHomePage();
@@ -34,7 +34,7 @@ public class ContactHelper extends HelperBase {
     }
 
     private void initContactModification(int index) {
-        click(By.xpath(String.format("(//img[@alt='Edit'])[%s]", index)));
+        click(By.xpath(String.format("(//img[@alt='Edit'])[%s]", index + 1)));
     }
 
     public void removeContact(ContactData contact) {
@@ -71,6 +71,7 @@ public class ContactHelper extends HelperBase {
         type(By.name("lastname"), contact.lastname());
         type(By.name("address"), contact.address());
         type(By.name("email"), contact.email());
+        attach(By.name("photo"), contact.photo());
     }
 
     private void initContactCreation() {

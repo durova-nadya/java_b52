@@ -13,7 +13,7 @@ public class ContactModificationTests extends TestBase
     @Test
     void canModificationContact() {
         if (app.contacts().getCount() == 0) {
-            app.contacts().createContact(new ContactData("", "Anna", "Brodskaya", "Susdal", "brodskaya_anna@ya.ru")
+            app.contacts().createContact(new ContactData("", "Anna", "Brodskaya", "Susdal", "brodskaya_anna@ya.ru", "")
             );
         }
         var oldContacts = app.contacts().getList();
