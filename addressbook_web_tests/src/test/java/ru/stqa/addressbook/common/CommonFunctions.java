@@ -1,4 +1,4 @@
-package common;
+package ru.stqa.addressbook.common;
 
 import java.io.File;
 import java.nio.file.Path;
