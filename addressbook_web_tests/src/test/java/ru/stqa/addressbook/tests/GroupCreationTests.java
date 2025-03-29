@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 
 public class GroupCreationTests extends TestBase {
@@ -88,7 +88,14 @@ public class GroupCreationTests extends TestBase {
         expectedList.add(group.withId(maxId));
         expectedList.sort(compareById);
         Assertions.assertEquals(newGroups, expectedList);
-   }
+
+        var newUiGroups = app.groups().getList();
+        newUiGroups.sort(compareById);
+        List<GroupData> modifyNewGroups = newGroups.stream()
+                .map(data -> new GroupData(data.id(), data.name(), "", ""))
+                .collect(Collectors.toList());
+        Assertions.assertEquals(newUiGroups, modifyNewGroups);
+    }
 
 
     public static List<GroupData> negativeGroupProvider() {
