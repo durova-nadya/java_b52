@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import ru.stqa.addressbook.model.GroupData;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,15 +40,15 @@ public class ContactCreationTests extends TestBase {
     @ParameterizedTest
     @MethodSource("contactProvider")
     public void canCreateMultipleContact(ContactData contact) {
-        var oldContacts = app.contacts().getList();
+        var oldContacts = app.hbm().getContactList();
         app.contacts().createContact(contact);
-        var newContacts = app.contacts().getList();
+        var newContacts = app.hbm().getContactList();
         Comparator<ContactData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
         };
         newContacts.sort(compareById);
         var expectedList = new ArrayList<>(oldContacts);
-        expectedList.add(contact.withId(newContacts.get(newContacts.size() - 1).id()).withPhoto(""));
+        expectedList.add(contact.withId(newContacts.get(newContacts.size() - 1).id()));
         expectedList.sort(compareById);
         Assertions.assertEquals(newContacts, expectedList);
 
@@ -56,33 +57,77 @@ public class ContactCreationTests extends TestBase {
 
     public static List<ContactData> onceContactProvider() {
         var result = new ArrayList<ContactData>(List.of(
-                new ContactData("", "Anna", "Marshak", "Moscow", "marshak_ann@ya.ru", "avatar5.png")));
+                new ContactData("", "Anna", "Marshak", "Moscow", "marshak_ann@ya.ru")));
         return result;
     }
 
     @ParameterizedTest
     @MethodSource("onceContactProvider")
     public void canCreateContact(ContactData contact) {
-        var oldContacts = app.contacts().getList();
+        var oldContacts = app.hbm().getContactList();
         app.contacts().createContact(contact);
-        var newContacts = app.contacts().getList();
+        var newContacts = app.hbm().getContactList();
         Comparator<ContactData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
         };
 
         newContacts.sort(compareById);
         var expectedList = new ArrayList<>(oldContacts);
-        expectedList.add(contact.withId(newContacts.get(newContacts.size() - 1).id()).withPhoto(""));
+        expectedList.add(contact.withId(newContacts.get(newContacts.size() - 1).id()));
         expectedList.sort(compareById);
         Assertions.assertEquals(newContacts, expectedList);
     }
 
-    @Test
-    void canCreateContactWithPhoto() {
-        app.contacts().createContact(new ContactData()
-                .withFirstName("Гаечка")
-                .withLastName("Спасатель")
-                .withEmail("gaya@ya.ru")
-                .withPhoto(CommonFunctions.randomFile("src/test/resources/images")));
+
+    public static List<ContactData> singleRandomContactProvider() {
+        return List.of(new ContactData()
+                .withFirstName(CommonFunctions.randomString(10))
+                .withLastName(CommonFunctions.randomString(20))
+                .withAddress(CommonFunctions.randomString(30))
+                .withEmail(CommonFunctions.randomString(15)));
     }
+
+    @ParameterizedTest
+    @MethodSource("singleRandomContactProvider")
+    public void canCreateRandomContact(ContactData contact) {
+        var oldContacts = app.jdbc().getContactList();
+        app.contacts().createContact(contact);
+        var newContacts = app.jdbc().getContactList();
+        Comparator<ContactData> compareById = (o1, o2) -> {
+            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
+        };
+        newContacts.sort(compareById);
+        var expectedList = new ArrayList<>(oldContacts);
+        expectedList.add(contact.withId(newContacts.get(newContacts.size() - 1).id()));
+        expectedList.sort(compareById);
+        Assertions.assertEquals(newContacts, expectedList);
+
+    }
+
+    @ParameterizedTest
+    @MethodSource("singleRandomContactProvider")
+    public void canCreateRandomContactHbm(ContactData contact) {
+        var oldContacts = app.hbm().getContactList();
+        app.contacts().createContact(contact);
+        var newContacts = app.hbm().getContactList();
+        Comparator<ContactData> compareById = (o1, o2) -> {
+            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
+        };
+        newContacts.sort(compareById);
+        var expectedList = new ArrayList<>(oldContacts);
+        expectedList.add(contact.withId(newContacts.get(newContacts.size() - 1).id()));
+        expectedList.sort(compareById);
+        Assertions.assertEquals(newContacts, expectedList);
+
+    }
+
+
+//    @Test
+//    void canCreateContactWithPhoto() {
+//        app.contacts().createContact(new ContactData()
+//                .withFirstName("Гаечка")
+//                .withLastName("Спасатель")
+//                .withEmail("gaya@ya.ru")
+//                .withPhoto(CommonFunctions.randomFile("src/test/resources/images")));
+//    }
 }

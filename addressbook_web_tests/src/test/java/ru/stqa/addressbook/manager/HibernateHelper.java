@@ -3,7 +3,9 @@ package ru.stqa.addressbook.manager;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.AvailableSettings;
+import ru.stqa.addressbook.manager.hbm.ContactRecord;
 import ru.stqa.addressbook.manager.hbm.GroupRecord;
+import ru.stqa.addressbook.model.ContactData;
 import ru.stqa.addressbook.model.GroupData;
 
 import java.util.ArrayList;
@@ -18,7 +20,8 @@ public class HibernateHelper extends HelperBase {
         super(manager);
         sessionFactory = new Configuration()
                .addAnnotatedClass(GroupRecord.class)
-               .setProperty(AvailableSettings.JAKARTA_JDBC_URL, "jdbc:mysql://localhost/addressbook")
+               .addAnnotatedClass(ContactRecord.class)
+               .setProperty(AvailableSettings.JAKARTA_JDBC_URL, "jdbc:mysql://localhost/addressbook?zeroDateTimeBehavior=convertToNull")
                .setProperty(AvailableSettings.JAKARTA_JDBC_USER, "root")
                .setProperty(AvailableSettings.JAKARTA_JDBC_PASSWORD, "")
                .buildSessionFactory();
@@ -62,5 +65,47 @@ public class HibernateHelper extends HelperBase {
             session.persist(convert(groupData));
             session.getTransaction().commit();
         });
+    }
+
+    static List<ContactData> convertListContact(List<ContactRecord> records) {
+        List<ContactData> result = new ArrayList<>();
+        for (var record : records) {
+            result.add(transform(record));
+        }
+        return result;
+    }
+
+    private static ContactData transform(ContactRecord record) {
+        return new ContactData("" + record.id, record.firstname, record.lastname, record.address, record.email);
+    }
+
+    private static ContactRecord transform(ContactData data) {
+        var id = data.id();
+        if ("".equals(id)) {
+            id = "0";
+        }
+        return new ContactRecord(Integer.parseInt(id), data.firstname(), data.lastname(), data.address(), data.email());
+    }
+
+    public long getContactCount() {
+        return sessionFactory.fromSession(session -> {
+            return session.createQuery("select count (*) from ContactRecord", Long.class).getSingleResult();
+        });
+    }
+
+    public List<ContactData> getContactList() {
+        return convertListContact(sessionFactory.fromSession(session -> {
+            return session.createQuery("from ContactRecord", ContactRecord.class).list();
+        }));
+    }
+
+
+    public void createContact(ContactData contactData) {
+        sessionFactory.inSession(session -> {
+            session.getTransaction().begin();
+            session.persist(transform(contactData));
+            session.getTransaction().commit();
+        });
+
     }
 }
