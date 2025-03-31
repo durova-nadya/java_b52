@@ -14,24 +14,17 @@ public class ContactRecord {
     @Column(name = "id")
     public int id;
 
-    // @Column(name = "firstname")
     public String firstname;
     public String middlename = "Сергеевич";
-
-   // @Column(name = "lastname")
     public String lastname;
     public String nickname = "pushkin";
     public String company = "December";
     public String title = "Best";
-
-  //  @Column(name = "address")
     public String address;
     public String home = "home";
     public String mobile ="+7(915)007-06-99";
     public String work = "work";
     public String fax ="+7(915)07-06-1799";
-
-  //  @Column(name = "email")
     public String email;
     public String email2 = "pushkin@ya.ru";
     public String email3 = "pushkin_a@ya.ru";
@@ -48,7 +41,4 @@ public class ContactRecord {
         this.email = email;
 
     }
-
-
-
 }

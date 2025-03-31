@@ -130,4 +130,21 @@ public class ContactCreationTests extends TestBase {
 //                .withEmail("gaya@ya.ru")
 //                .withPhoto(CommonFunctions.randomFile("src/test/resources/images")));
 //    }
+
+    @Test
+    void canCreateContactInGroup() {
+        var contact = new ContactData()
+                .withFirstName("Гаечка")
+                .withLastName("Спасатель")
+                .withEmail("gaya@ya.ru");
+        if (app.hbm().getGroupCount() == 0) {
+            app.hbm().createGroup(new GroupData("", "Friends", "Best friends", "comment"));
+        }
+        var group = app.hbm().getGroupList().get(0);
+
+        var oldRelated = app.hbm().getContactsInGroup(group);
+        app.contacts().createContactInGroup(contact, group);
+        var newRelated = app.hbm().getContactsInGroup(group);
+        Assertions.assertEquals(oldRelated.size() + 1, newRelated.size());
+    }
 }

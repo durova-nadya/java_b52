@@ -1,7 +1,9 @@
 package ru.stqa.addressbook.manager;
 
+import org.openqa.selenium.support.ui.Select;
 import ru.stqa.addressbook.model.ContactData;
 import org.openqa.selenium.By;
+import ru.stqa.addressbook.model.GroupData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,18 @@ public class ContactHelper extends HelperBase {
         fillContactForm(contact);
         submitContactCreation();
         openHomePage();
+    }
+
+    public void createContactInGroup(ContactData contact, GroupData group) {
+        initContactCreation();
+        fillContactForm(contact);
+        selectGroup(group);
+        submitContactCreation();
+        openHomePage();
+    }
+
+    private void selectGroup(GroupData group) {
+        new Select(manager.driver.findElement(By.name("new_group"))).selectByValue(group.id());
     }
 
 
@@ -106,6 +120,37 @@ public class ContactHelper extends HelperBase {
                     contacts.add(new ContactData().withId(id).withFirstName(firstname).withLastName(lastname).withAddress(address).withEmail(email));
             }
         return contacts;
+    }
+
+
+    public void addContactInGroup(ContactData contact, GroupData group) {
+        openHomePage();
+        selectContact(contact);
+        selectGroupFromHomePage(group);
+        addContactToGroup();
+        openPageContactsInGroup(group);
+    }
+
+    private void openPageContactsInGroup(GroupData group) {
+        click(By.linkText(String.format("group page \"%s\"", group.name())));
+    }
+
+    private void addContactToGroup() {
+        click(By.name("add"));
+    }
+
+    private void selectGroupFromHomePage(GroupData group) {
+        new Select(manager.driver.findElement(By.name("to_group"))).selectByValue(group.id());
+    }
+
+    public boolean contactInGroup(String id, List<ContactData> contacts) {
+        for (var contact : contacts) {
+            var s = contact.id();
+            if (id.equals(s)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 
