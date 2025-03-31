@@ -152,5 +152,21 @@ public class ContactHelper extends HelperBase {
         }
         return false;
     }
+
+    public void removeContactFromGroup(ContactData contact, GroupData group) {
+        openHomePage();
+        selectFilterToGroup(group);
+        selectContact(contact);
+        removeContactOfGroup();
+        openPageContactsInGroup(group);
+    }
+
+    private void removeContactOfGroup() {
+        click(By.name("remove"));
+    }
+
+    private void selectFilterToGroup(GroupData group) {
+        new Select(manager.driver.findElement(By.name("group"))).selectByValue(group.id());
+    }
 }
 
