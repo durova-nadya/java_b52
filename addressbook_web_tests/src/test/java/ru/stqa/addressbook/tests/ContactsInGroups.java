@@ -83,6 +83,26 @@ public class ContactsInGroups extends TestBase{
     }
 
     @Test
+    void canAddContactInNewGroup() {
+
+        if (app.hbm().getContactCount() == 0) {
+            app.hbm().createContact(new ContactData("", "Саша", "Наш", "Санкт-Петербург", "pushkin.as@mail.ru"));
+        }
+        app.hbm().createGroup(new GroupData("", "Work", "Colleagues", "Family"));
+
+        int maxId = (int) app.hbm().getGroupCount();
+        var group = app.hbm().getGroupList().get(maxId - 1);
+
+        var contact = app.hbm().getContactList().get(0);
+        app.contacts().addContactInGroup(contact, group);
+
+        List<ContactData> expectedList = new ArrayList<>();
+        expectedList.add(contact);
+        var newRelated = app.hbm().getContactsInGroup(group);
+        Assertions.assertEquals(expectedList, newRelated);
+    }
+
+    @Test
     void canRemoveContactFromGroup() {
         if (app.hbm().getGroupCount() == 0) {
             app.hbm().createGroup(new GroupData("", "Friends", "Best friends", "comment"));
