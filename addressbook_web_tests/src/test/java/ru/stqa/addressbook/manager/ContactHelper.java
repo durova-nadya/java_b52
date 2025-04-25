@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ContactHelper extends HelperBase {
 
@@ -115,12 +117,13 @@ public class ContactHelper extends HelperBase {
         var rows = manager.driver.findElements(By.name("entry"));
             for (var row : rows) {
                 var lastname = row.findElement(By.cssSelector(":nth-child(2)")).getText();
-                var firstname = row.findElement(By.cssSelector(":nth-child(3)")).getText();;
-                var address = row.findElement(By.cssSelector(":nth-child(4)")).getText();;
-                var email = row.findElement(By.cssSelector(":nth-child(5)")).getText();;
+                var firstname = row.findElement(By.cssSelector(":nth-child(3)")).getText();
+                var address = row.findElement(By.cssSelector(":nth-child(4)")).getText();
+                var email = row.findElement(By.cssSelector(":nth-child(5)")).getText();
+                var phone = row.findElement(By.cssSelector(":nth-child(6)")).getText();
                 var checkbox = row.findElement(By.name("selected[]"));
                 var id = checkbox.getDomAttribute("value");
-                    contacts.add(new ContactData().withId(id).withFirstName(firstname).withLastName(lastname).withAddress(address).withEmail(email));
+                    contacts.add(new ContactData().withId(id).withFirstName(firstname).withLastName(lastname).withAddress(address).withEmail(email).withMobile(phone));
             }
         return contacts;
     }
@@ -186,6 +189,34 @@ public class ContactHelper extends HelperBase {
             result.put(id, phones);
         }
         return result;
+    }
+
+    public Object getInfoContactEditPage(int index) {
+        openHomePage();
+        initContactModification(index);
+
+        var id = manager.driver.findElement(By.name("id")).getDomAttribute("value");
+        var lastname = manager.driver.findElement(By.name("lastname")).getDomAttribute("value");
+        var firstname = manager.driver.findElement(By.name("firstname")).getDomAttribute("value");
+        var address = manager.driver.findElement(By.name("address")).getText();
+
+        var email1 = manager.driver.findElement(By.name("email")).getDomAttribute("value");
+        var email2 = manager.driver.findElement(By.name("email2")).getDomAttribute("value");
+        var email3 = manager.driver.findElement(By.name("email3")).getDomAttribute("value");
+        var email = Stream.of(email1, email2, email3)
+                .filter(s -> s != null && ! "".equals(s))
+                .collect(Collectors.joining("\n"));
+
+        var phone1 = manager.driver.findElement(By.name("home")).getDomAttribute("value");
+        var phone2 = manager.driver.findElement(By.name("mobile")).getDomAttribute("value");
+        var phone3 = manager.driver.findElement(By.name("work")).getDomAttribute("value");
+        var phone = Stream.of(phone1, phone2, phone3)
+                .filter(s -> s != null && ! "".equals(s))
+                .collect(Collectors.joining("\n"))
+                .replaceAll("[()\\-]", "").replaceAll(" ", "");
+
+        var contact = new ContactData().withId(id).withFirstName(firstname).withLastName(lastname).withAddress(address).withEmail(email).withMobile(phone);
+        return contact;
     }
 }
 
