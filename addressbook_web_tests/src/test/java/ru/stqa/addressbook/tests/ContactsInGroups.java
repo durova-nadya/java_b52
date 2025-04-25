@@ -39,7 +39,7 @@ public class ContactsInGroups extends TestBase{
         var groupCheck = new GroupData();
 
         if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "Саша", "Наш", "Санкт-Петербург", "pushkin.as@mail.ru"));
+            app.hbm().createContact(new ContactData("", "Саша", "Наш", "Санкт-Петербург", "pushkin.as@mail.ru", "", "", "", ""));
         }
         if (app.hbm().getGroupCount() == 0) {
             app.hbm().createGroup(new GroupData("", "Friends", "Best friends", "comment"));
@@ -64,7 +64,7 @@ public class ContactsInGroups extends TestBase{
         if (! isGroup) {
             groupCheck = app.hbm().getGroupList().get(0);
             oldRelated = app.hbm().getContactsInGroup(groupCheck);
-            app.hbm().createContact(new ContactData("", "Саша", "Наш", "Санкт-Петербург", "pushkin.as@mail.ru"));
+            app.hbm().createContact(new ContactData("", "Саша", "Наш", "Санкт-Петербург", "pushkin.as@mail.ru", "", "", "", ""));
             int maxId = (int) app.hbm().getContactCount();
             contactCheck = app.hbm().getContactList().get(maxId - 1);
             app.contacts().addContactInGroup(contactCheck, groupCheck);
@@ -86,7 +86,7 @@ public class ContactsInGroups extends TestBase{
     void canAddContactInNewGroup() {
 
         if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "Саша", "Наш", "Санкт-Петербург", "pushkin.as@mail.ru"));
+            app.hbm().createContact(new ContactData("", "Саша", "Наш", "Санкт-Петербург", "pushkin.as@mail.ru", "", "", "", ""));
         }
         app.hbm().createGroup(new GroupData("", "Work", "Colleagues", "Family"));
 
@@ -109,7 +109,7 @@ public class ContactsInGroups extends TestBase{
         }
         var group = app.hbm().getGroupList().get(0);
         if (app.hbm().getContactCount() == 0) {
-            var contact = new ContactData("", "Саша", "Наш", "Санкт-Петербург", "pushkin.as@mail.ru");
+            var contact = new ContactData("", "Саша", "Наш", "Санкт-Петербург", "pushkin.as@mail.ru", "", "", "", "");
             app.contacts().createContactInGroup(contact, group);
         }
 

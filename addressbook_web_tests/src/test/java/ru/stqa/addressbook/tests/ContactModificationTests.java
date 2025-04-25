@@ -3,20 +3,17 @@ package ru.stqa.addressbook.tests;
 import ru.stqa.addressbook.model.ContactData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import ru.stqa.addressbook.model.GroupData;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 public class ContactModificationTests extends TestBase
 {
     @Test
     void canModificationContact() {
         if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "Саша", "Наш", "Санкт-Петербург", "pushkin.as@mail.ru"));
+            app.hbm().createContact(new ContactData("", "Саша", "Наш", "Санкт-Петербург", "pushkin.as@mail.ru", "", "", "", ""));
         }
         var oldContacts = app.hbm().getContactList();;
         var rnd = new Random();
