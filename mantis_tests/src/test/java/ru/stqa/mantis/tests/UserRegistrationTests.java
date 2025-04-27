@@ -30,4 +30,21 @@ public class UserRegistrationTests extends TestBase {
 
     }
 
+    @ParameterizedTest
+    @MethodSource("singleRandomUserNameProvider")
+    public void canCreateUser(String username) {
+        var email = String.format("%s@localhost", username);
+        app.jamesApi().addUser(email, "password");
+        app.users().createUser(username, email);
+
+        var url = app.users().receivedUrl(email);
+        if (url != null) {
+            app.users().activation(url);
+        }
+
+        app.http().login(username, "password");
+        Assertions.assertTrue(app.http().isLoggedIn());
+
+    }
+
 }
