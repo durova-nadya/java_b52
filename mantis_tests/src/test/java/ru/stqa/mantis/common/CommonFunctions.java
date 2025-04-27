@@ -19,14 +19,4 @@ public class CommonFunctions {
         return result;
     }
 
-    public static String randomFile(String dir) {
-        File directory = new File(dir);
-        if (!directory.exists() || !directory.isDirectory()) {
-            throw new IllegalArgumentException("Указанный путь не существует или не является директорией: " + dir);
-        }
-       var fileNames = new File(dir).list();
-       var rnd = new Random();
-       var index = rnd.nextInt(fileNames.length);
-       return Paths.get(dir, fileNames[index]).toString();
-    }
 }

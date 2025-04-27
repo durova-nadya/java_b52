@@ -1,18 +1,33 @@
 package ru.stqa.mantis.tests;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import ru.stqa.mantis.common.CommonFunctions;
+
+import java.util.List;
 
 public class UserRegistrationTests extends TestBase {
 
-    @Test
-    void canRegisterUser(String username) {
+    public static List<String> singleRandomUserNameProvider() {
+        return List.of(CommonFunctions.randomString(8));
+    }
+
+    @ParameterizedTest
+    @MethodSource("singleRandomUserNameProvider")
+    public void canRegisterUser(String username) {
         var email = String.format("%s@localhost", username);
-        // создать пользователя (адрес) на почтовом сервере (JamesHelper)
-        // заполняем форму создания и отправляем (браузер)
-        // ждём почту (MailHelper)
-        // извлекаем ссылку из письма
-        // проходим по ссылке и завершаем регистрацию (браузер)
-        // проверяем, что пользователь может залогиниться (HttpSessionHelper)
+        app.jamesCli().addUser(email, "password");
+        app.users().createUser(username, email);
+
+        var url = app.users().receivedUrl(email);
+        if (url != null) {
+            app.users().activation(url);
+        }
+
+        app.http().login(username, "password");
+        Assertions.assertTrue(app.http().isLoggedIn());
 
     }
+
 }

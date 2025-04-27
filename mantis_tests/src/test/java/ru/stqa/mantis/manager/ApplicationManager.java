@@ -24,6 +24,8 @@ public class ApplicationManager {
 
     private MailHelper mailHelper;
 
+    private UserHelper users;
+
 
     public void init(String browser, Properties properties) {
         this.string = browser;
@@ -45,6 +47,7 @@ public class ApplicationManager {
             Runtime.getRuntime().addShutdownHook(new Thread(driver::quit));
             driver.get(properties.getProperty("web.baseUrl"));
             driver.manage().window().setSize(new Dimension(1536, 824));
+            session().login(properties.getProperty("web.username"), properties.getProperty("web.password"));
 
         }
         return driver;
@@ -76,6 +79,13 @@ public class ApplicationManager {
             mailHelper = new MailHelper(this);
         }
         return mailHelper;
+    }
+
+    public UserHelper users() {
+        if (users == null) {
+            users = new UserHelper(this);
+        }
+        return users;
     }
 
     public String property(String name) {
