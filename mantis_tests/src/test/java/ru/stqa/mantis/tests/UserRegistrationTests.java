@@ -38,9 +38,8 @@ public class UserRegistrationTests extends TestBase {
         app.users().createUser(username, email);
 
         var url = app.users().receivedUrl(email);
-        if (url != null) {
-            app.users().activation(url);
-        }
+        app.users().activation(url);
+
 
         app.http().login(username, "password");
         Assertions.assertTrue(app.http().isLoggedIn());
