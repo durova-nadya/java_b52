@@ -42,6 +42,9 @@ public class UserHelper extends HelperBase {
 
     private void openManagePage() {
         //click(By.xpath("//span[text()='Manage']"));
+        if (!manager.session().isLoggedIn()) {
+            manager.session().login(manager.property("web.username"), manager.property("web.password"));
+        }
         click(By.xpath("//a[@href='/mantisbt-2.25.8/manage_overview_page.php']"));
     }
 

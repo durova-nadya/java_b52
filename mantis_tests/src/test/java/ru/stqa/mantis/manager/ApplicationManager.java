@@ -53,7 +53,7 @@ public class ApplicationManager {
             Runtime.getRuntime().addShutdownHook(new Thread(driver::quit));
             driver.get(properties.getProperty("web.baseUrl"));
             driver.manage().window().setSize(new Dimension(1536, 824));
-            session().login(properties.getProperty("web.username"), properties.getProperty("web.password"));
+           // session().login(properties.getProperty("web.username"), properties.getProperty("web.password"));
 
         }
         return driver;

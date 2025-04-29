@@ -40,8 +40,23 @@ public class UserRegistrationTests extends TestBase {
         var url = app.users().receivedUrl(email);
         app.users().activation(url);
 
-
         app.http().login(username, "password");
+        Assertions.assertTrue(app.http().isLoggedIn());
+    }
+
+
+    @ParameterizedTest
+    @MethodSource("singleRandomUserNameProvider")
+    public void canCreateUserRestApi(String username) {
+        var email = String.format("%s@localhost", username);
+        var password = "password";
+        app.jamesApi().addUser(email, password);
+        app.rest().createUser(username, email, password);
+
+        var url = app.users().receivedUrl(email);
+        app.users().activation(url);
+
+        app.http().login(username, password);
         Assertions.assertTrue(app.http().isLoggedIn());
 
     }
