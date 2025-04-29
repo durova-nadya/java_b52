@@ -73,7 +73,11 @@ public class Generator {
                 .withFirstName(CommonFunctions.randomString( 10))
                 .withLastName(CommonFunctions.randomString( 10))
                 .withAddress(CommonFunctions.randomString(10))
-                .withEmail(CommonFunctions.randomString(10)));
+                .withEmail(CommonFunctions.randomString(10))
+                .withHome(CommonFunctions.randomInteger(10))
+                .withMobile(CommonFunctions.randomInteger(10))
+                .withWork(CommonFunctions.randomInteger(10)));
+
     }
 
     private void save(Object data) throws IOException {

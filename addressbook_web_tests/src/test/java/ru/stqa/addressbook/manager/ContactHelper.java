@@ -1,5 +1,6 @@
 package ru.stqa.addressbook.manager;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import ru.stqa.addressbook.model.ContactData;
@@ -39,6 +40,7 @@ public class ContactHelper extends HelperBase {
     }
 
 
+    @Step
     public void modifyContact(int index, ContactData modifiedContact) {
         openHomePage();
         initContactModification(index);
@@ -90,6 +92,10 @@ public class ContactHelper extends HelperBase {
         type(By.name("lastname"), contact.lastname());
         type(By.name("address"), contact.address());
         type(By.name("email"), contact.email());
+        type(By.name("home"), contact.home());
+        type(By.name("mobile"), contact.mobile());
+        type(By.name("work"), contact.work());
+
         //attach(By.name("photo"), contact.photo());
     }
 

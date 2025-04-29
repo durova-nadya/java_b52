@@ -1,14 +1,8 @@
 package ru.stqa.mantis.manager;
 
-import biz.futureware.mantis.rpc.soap.client.IssueHeaderData;
 import biz.futureware.mantis.rpc.soap.client.MantisConnectLocator;
 import biz.futureware.mantis.rpc.soap.client.MantisConnectPortType;
 import biz.futureware.mantis.rpc.soap.client.ObjectRef;
-import io.swagger.client.ApiException;
-import io.swagger.client.api.UserApi;
-import io.swagger.client.model.Issue;
-import io.swagger.client.model.User;
-import io.swagger.client.model.UserAddResponse;
 import ru.stqa.mantis.model.IssueData;
 
 import javax.xml.rpc.ServiceException;
@@ -55,19 +49,4 @@ public class SoapApiHelper extends HelperBase {
 
     }
 
-    public void createUser(String username, String email, String password) {
-
-        User user = new User();
-        user.setUsername(username);
-        user.setEmail(email);
-        user.setPassword(password);
-        UserApi apiInstance = new UserApi();
-        try {
-            UserAddResponse result = apiInstance.userAdd(user);
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling UserApi#userAdd");
-            e.printStackTrace();
-        }
-    }
 }

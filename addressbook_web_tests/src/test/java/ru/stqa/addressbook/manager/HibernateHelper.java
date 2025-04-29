@@ -1,5 +1,6 @@
 package ru.stqa.addressbook.manager;
 
+import io.qameta.allure.Step;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.AvailableSettings;
@@ -43,12 +44,14 @@ public class HibernateHelper extends HelperBase {
         return new GroupRecord(Integer.parseInt(id), data.name(), data.header(), data.footer());
     }
 
+    @Step
     public List<GroupData> getGroupList() {
         return convertList(sessionFactory.fromSession(session -> {
             return session.createQuery("from GroupRecord", GroupRecord.class).list();
         }));
     }
 
+    @Step
     public long getGroupCount() {
         return sessionFactory.fromSession(session -> {
             return session.createQuery("select count (*) from GroupRecord", Long.class).getSingleResult();
@@ -88,19 +91,21 @@ public class HibernateHelper extends HelperBase {
         return new ContactRecord(Integer.parseInt(id), data.firstname(), data.lastname(), data.address(), data.email());
     }
 
+    @Step
     public long getContactCount() {
         return sessionFactory.fromSession(session -> {
             return session.createQuery("select count (*) from ContactRecord", Long.class).getSingleResult();
         });
     }
 
+    @Step
     public List<ContactData> getContactList() {
         return convertListContact(sessionFactory.fromSession(session -> {
             return session.createQuery("from ContactRecord", ContactRecord.class).list();
         }));
     }
 
-
+    @Step
     public void createContact(ContactData contactData) {
         sessionFactory.inSession(session -> {
             session.getTransaction().begin();
@@ -110,6 +115,7 @@ public class HibernateHelper extends HelperBase {
 
     }
 
+    @Step
     public List<ContactData> getContactsInGroup(GroupData group) {
         return sessionFactory.fromSession(session -> {
             return convertListContact(session.get(GroupRecord.class, group.id()).contacts);

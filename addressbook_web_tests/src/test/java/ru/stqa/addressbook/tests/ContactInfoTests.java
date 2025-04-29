@@ -13,7 +13,7 @@ public class ContactInfoTests extends TestBase {
     @Test
     void testPhones() {
         if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "Саша", "Наш", "Санкт-Петербург", "pushkin.as@mail.ru", "", "", "", ""));
+            app.hbm().createContact(new ContactData("", "Sacha", "Nash", "Spb", "pushkin.as@mail.ru", "", "", "", ""));
         }
         var contacts = app.hbm().getContactList();
         var expected = contacts.stream().collect(Collectors.toMap(ContactData::id, contact ->
@@ -29,7 +29,7 @@ public class ContactInfoTests extends TestBase {
     @Test
     void testContact() {
         if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "Александр", "Пушкин", "Санкт-Петербург", "pushkin.as@mail.ru", "88121110055", "+79168841212", "", ""));
+            app.hbm().createContact(new ContactData("", "Alexandr", "Puchkin", "Spb", "pushkin.as@mail.ru", "88121110055", "+79168841212", "", ""));
         }
         var contacts = app.contacts().getList();
         var rnd = new Random();

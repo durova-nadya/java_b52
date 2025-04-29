@@ -19,15 +19,6 @@ public class ContactCreationTests extends TestBase {
 
     public static List<ContactData> contactProvider() throws IOException {
         var result = new ArrayList<ContactData>();
-//        for (var firstname : List.of("", "first name")) {
-//            for (var lastname : List.of("", "last name")) {
-//                for (var address : List.of("", "address")) {
-//                    for (var email : List.of("", "email")) {
-//                        result.add(new ContactData().withFirstName(firstname).withLastName(lastname).withAddress(address).withEmail(email));
-//                    }
-//                }
-//            }
-//        }
         ObjectMapper mapper = new ObjectMapper();
         var value = mapper.readValue(new File("contacts.json"), new TypeReference<List<ContactData>>() {});
         result.addAll(value);
