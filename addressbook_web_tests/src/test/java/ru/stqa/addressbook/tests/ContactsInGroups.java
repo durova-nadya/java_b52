@@ -64,7 +64,7 @@ public class ContactsInGroups extends TestBase{
         if (! isGroup) {
             groupCheck = app.hbm().getGroupList().get(0);
             oldRelated = app.hbm().getContactsInGroup(groupCheck);
-            app.hbm().createContact(new ContactData("", "Sacha", "Bach", "Moscow", "pushkin.as@mail.ru", "", "", "", ""));
+            app.hbm().createContact(new ContactData("", "Sacha", "Bach", "Moscow", "pushkin.as@mail.ru", "7557411", "75275272", "77578585", ""));
             int maxId = (int) app.hbm().getContactCount();
             contactCheck = app.hbm().getContactList().get(maxId - 1);
             app.contacts().addContactInGroup(contactCheck, groupCheck);
@@ -86,7 +86,7 @@ public class ContactsInGroups extends TestBase{
     void canAddContactInNewGroup() {
 
         if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "Alex", "Bach", "Moscow", "pushkin.as@mail.ru", "", "", "", ""));
+            app.hbm().createContact(new ContactData("", "Alex", "Bach", "Moscow", "pushkin.as@mail.ru", "47727", "7527527", "7852527", ""));
         }
         app.hbm().createGroup(new GroupData("", "Work", "Colleagues", "Family"));
 
@@ -109,7 +109,7 @@ public class ContactsInGroups extends TestBase{
         }
         var group = app.hbm().getGroupList().get(0);
         if (app.hbm().getContactCount() == 0) {
-            var contact = new ContactData("", "Alex", "Bah", "Tula", "pushkin.as@mail.ru", "", "", "", "");
+            var contact = new ContactData("", "Alex", "Bah", "Tula", "pushkin.as@mail.ru", "752727", "2727", "7217", "");
             app.contacts().createContactInGroup(contact, group);
         }
 

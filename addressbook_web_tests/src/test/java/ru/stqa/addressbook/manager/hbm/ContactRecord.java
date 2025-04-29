@@ -21,9 +21,9 @@ public class ContactRecord {
     public String company = "December";
     public String title = "Best";
     public String address;
-    public String home = "11122233";
-    public String mobile = "89152221122";
-    public String work = "8934534";
+    public String home;
+    public String mobile;
+    public String work;
     public String phone2;
     public String fax ="+7(915)07-06-1799";
     public String email;

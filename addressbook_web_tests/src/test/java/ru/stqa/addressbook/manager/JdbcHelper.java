@@ -37,7 +37,7 @@ public class JdbcHelper extends HelperBase {
         var contacts = new ArrayList<ContactData>();
         try (var conn = DriverManager.getConnection("jdbc:mysql://localhost/addressbook", "root", "");
              var statement = conn.createStatement();
-             var result = statement.executeQuery("SELECT id, firstname, lastname, address, email FROM addressbook"))
+             var result = statement.executeQuery("SELECT id, firstname, lastname, address, email, home, mobile, work FROM addressbook"))
         {
             while (result.next()) {
                 contacts.add(new ContactData()
@@ -45,7 +45,10 @@ public class JdbcHelper extends HelperBase {
                         .withFirstName(result.getString("firstname"))
                         .withLastName(result.getString("lastname"))
                         .withAddress(result.getString("address"))
-                        .withEmail(result.getString("email")));
+                        .withEmail(result.getString("email"))
+                        .withHome(result.getString("home"))
+                        .withMobile(result.getString("mobile"))
+                        .withWork(result.getString("work")));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -60,7 +63,7 @@ public class JdbcHelper extends HelperBase {
                      "SELECT * FROM address_in_groups ag LEFT JOIN addressbook ab ON ab.id = ag.id WHERE ab.id IS NULL"))
         {
             if (result.next()) {
-               throw new IllegalStateException("БД повреждена");
+               throw new IllegalStateException("DB is not consistent");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
