@@ -32,6 +32,8 @@ public class ApplicationManager {
 
     private RestApiHelper restApiHelper;
 
+    private SoapApiHelper soapApiHelper;
+
 
     public void init(String browser, Properties properties) {
         this.string = browser;
@@ -53,8 +55,6 @@ public class ApplicationManager {
             Runtime.getRuntime().addShutdownHook(new Thread(driver::quit));
             driver.get(properties.getProperty("web.baseUrl"));
             driver.manage().window().setSize(new Dimension(1536, 824));
-           // session().login(properties.getProperty("web.username"), properties.getProperty("web.password"));
-
         }
         return driver;
     }
@@ -113,6 +113,13 @@ public class ApplicationManager {
             restApiHelper = new RestApiHelper(this);
         }
         return restApiHelper;
+    }
+
+    public SoapApiHelper soap() {
+        if (soapApiHelper == null) {
+            soapApiHelper = new SoapApiHelper(this);
+        }
+        return soapApiHelper;
     }
 
     public String property(String name) {
