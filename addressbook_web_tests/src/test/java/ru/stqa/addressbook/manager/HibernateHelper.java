@@ -71,8 +71,7 @@ public class HibernateHelper extends HelperBase {
     }
 
     private static ContactData transform(ContactRecord record) {
-       // return new ContactData("" + record.id, record.firstname, record.lastname, record.address, record.email, "", "", "", "");
-        return new ContactData().withId("" + record.id)
+       return new ContactData().withId("" + record.id)
                 .withFirstName(record.firstname)
                 .withLastName(record.lastname)
                 .withEmail(record.email)

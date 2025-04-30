@@ -2,11 +2,14 @@ package ru.stqa.addressbook.manager;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.stqa.addressbook.model.ContactData;
 import org.openqa.selenium.By;
 import ru.stqa.addressbook.model.GroupData;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -72,7 +75,12 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//div[2]/input"));
     }
 
+    @Step
     private void selectContact(ContactData contact) {
+//        WebDriverWait wait = new WebDriverWait(manager.driver, Duration.ofSeconds(10));
+//        WebElement element = wait.until(
+//                ExpectedConditions.elementToBeClickable(By.cssSelector(String.format("input[value='%s']", contact.id()))));
+//        element.click();
         click(By.cssSelector(String.format("input[value='%s']", contact.id())));
     }
 
@@ -141,6 +149,7 @@ public class ContactHelper extends HelperBase {
     }
 
 
+    @Step
     public void addContactInGroup(ContactData contact, GroupData group) {
         openHomePage();
         selectContact(contact);
@@ -161,6 +170,7 @@ public class ContactHelper extends HelperBase {
         new Select(manager.driver.findElement(By.name("to_group"))).selectByValue(group.id());
     }
 
+    @Step
     public boolean contactInGroup(String id, List<ContactData> contacts) {
         for (var contact : contacts) {
             var s = contact.id();
@@ -171,6 +181,7 @@ public class ContactHelper extends HelperBase {
         return false;
     }
 
+    @Step
     public void removeContactFromGroup(ContactData contact, GroupData group) {
         openHomePage();
         selectFilterToGroup(group);

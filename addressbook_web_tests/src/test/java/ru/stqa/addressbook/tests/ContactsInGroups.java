@@ -6,10 +6,7 @@ import org.junit.jupiter.api.Test;
 import ru.stqa.addressbook.model.ContactData;
 import ru.stqa.addressbook.model.GroupData;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class ContactsInGroups extends TestBase{
 
@@ -78,16 +75,15 @@ public class ContactsInGroups extends TestBase{
         }
 
         var newRelated = app.hbm().getContactsInGroup(groupCheck);
-        Comparator<ContactData> compareById = (o1, o2) -> {
-            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
-        };
-        newRelated.sort(compareById);
         var expectedList = new ArrayList<>(oldRelated);
         expectedList.add(contactCheck.withId(contactCheck.id()));
-        expectedList.sort(compareById);
 
-        Assertions.assertEquals(expectedList, newRelated);
+        Allure.step("Validating results", step -> {
+            Assertions.assertEquals(Set.copyOf(expectedList), Set.copyOf(newRelated));
+        });
     }
+
+
 
     @Test
     void canAddContactInNewGroup() {
