@@ -46,7 +46,7 @@ public class ContactCreationTests extends TestBase {
 
     public static List<ContactData> onceContactProvider() {
         var result = new ArrayList<ContactData>(List.of(
-                new ContactData("", "Anna", "Marshak", "Moscow", "marshak_ann@ya.ru", "", "", "", "")));
+                new ContactData("", "Anna", "Marshak", "Moscow", "marshak_ann@ya.ru", "145554", "75272", "452422", "")));
         return result;
     }
 

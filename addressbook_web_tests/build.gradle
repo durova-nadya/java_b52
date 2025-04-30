@@ -45,4 +45,11 @@ test {
         systemProperty("target", project.property("target"))
     }
     jvmArgs = [ "-javaagent:${configurations.agent.singleFile}" ]
+
+//    filter {
+//        includeTestsMatching "*.ContactModificationTests.canModificationContact"
+//        includeTestsMatching "*.ContactInfoTests.testPhones"
+//        includeTestsMatching "*.ContactsInGroups.canAddContactInGroup"
+//    }
+
 }

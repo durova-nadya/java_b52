@@ -1,5 +1,6 @@
 package ru.stqa.addressbook.tests;
 
+import io.qameta.allure.Allure;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.stqa.addressbook.model.ContactData;
@@ -17,7 +18,11 @@ public class ContactsInGroups extends TestBase{
         var contact = new ContactData()
                 .withFirstName("Gaya")
                 .withLastName("Mouse")
-                .withEmail("gaya@ya.ru");
+                .withEmail("gaya@ya.ru")
+                .withAddress("Orel")
+                .withHome("2342342342")
+                .withMobile("3242344")
+                .withWork("234234");
         if (app.hbm().getGroupCount() == 0) {
             app.hbm().createGroup(new GroupData("", "Friends", "Best friends", "comment"));
         }
@@ -38,12 +43,14 @@ public class ContactsInGroups extends TestBase{
         var contactCheck = new ContactData();
         var groupCheck = new GroupData();
 
-        if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "Sacha", "Puh", "Spb", "pushkin.as@mail.ru", "", "", "", ""));
-        }
-        if (app.hbm().getGroupCount() == 0) {
-            app.hbm().createGroup(new GroupData("", "Friends", "Best friends", "comment"));
-        }
+        Allure.step("Checking precondition", step -> {
+                    if (app.hbm().getContactCount() == 0) {
+                        app.hbm().createContact(new ContactData("", "Sacha", "Puh", "Spb", "pushkin.as@mail.ru", "1474147", "7452775", "7578575", ""));
+                    }
+                    if (app.hbm().getGroupCount() == 0) {
+                        app.hbm().createGroup(new GroupData("", "Friends", "Best friends", "comment"));
+                    }
+                });
 
         var allGroups = app.hbm().getGroupList();
         var allContacts = app.hbm().getContactList();

@@ -1,5 +1,6 @@
 package ru.stqa.addressbook.tests;
 
+import io.qameta.allure.Allure;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.stqa.addressbook.model.ContactData;
@@ -12,18 +13,27 @@ public class ContactInfoTests extends TestBase {
 
     @Test
     void testPhones() {
-        if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "Sacha", "Nash", "Spb", "pushkin.as@mail.ru", "5248", "6752", "454", ""));
-        }
+        Allure.step("Checking precondition", step -> {
+            if (app.hbm().getContactCount() == 0) {
+                app.hbm().createContact(new ContactData("", "Sacha", "Nash", "Spb", "pushkin.as@mail.ru", "5248", "6752", "454", ""));
+            }
+        });
+
         var contacts = app.hbm().getContactList();
         var expected = contacts.stream().collect(Collectors.toMap(ContactData::id, contact ->
-                Stream.of(contact.home(), contact.mobile(), contact.work(), contact.phone2())
+                Stream.of(contact.home(), contact.mobile(), contact.work())
                         .filter(s -> s != null && ! "".equals(s))
                         .collect(Collectors.joining("\n"))
                         .replaceAll("[()\\-]", "").replaceAll(" ", "")
                 ));
+
+        app.contacts().openHomePage();
         var phones = app.contacts().getPhones();
-        Assertions.assertEquals(expected, phones);
+
+        Allure.step("Validating results", step -> {
+            Assertions.assertEquals(expected, phones);
+        });
+
     }
 
     @Test

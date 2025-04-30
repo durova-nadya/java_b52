@@ -20,6 +20,7 @@ public class ContactHelper extends HelperBase {
         super(manager);
     }
 
+    @Step
     public void createContact(ContactData contact) {
         initContactCreation();
         fillContactForm(contact);
@@ -27,6 +28,7 @@ public class ContactHelper extends HelperBase {
         openHomePage();
     }
 
+    @Step
     public void createContactInGroup(ContactData contact, GroupData group) {
         initContactCreation();
         fillContactForm(contact);
@@ -58,6 +60,7 @@ public class ContactHelper extends HelperBase {
         click(By.xpath(String.format("(//img[@alt='Edit'])[%s]", index + 1)));
     }
 
+    @Step
     public void removeContact(ContactData contact) {
         openHomePage();
         selectContact(contact);
@@ -79,7 +82,8 @@ public class ContactHelper extends HelperBase {
     }
 
 
-    private void openHomePage() {
+    @Step
+    public void openHomePage() {
         click(By.linkText("home"));
     }
 
@@ -110,6 +114,7 @@ public class ContactHelper extends HelperBase {
         removeSelectedContacts();
     }
 
+    @Step
     private void selectAllContacts() {
         var checkboxes = manager.driver.findElements(By.name("selected[]"));
         for (var checkbox : checkboxes) {
@@ -117,6 +122,7 @@ public class ContactHelper extends HelperBase {
         }
     }
 
+    @Step
     public List<ContactData> getList() {
         openHomePage();
         var contacts = new ArrayList<ContactData>();
@@ -181,11 +187,12 @@ public class ContactHelper extends HelperBase {
         new Select(manager.driver.findElement(By.name("group"))).selectByValue(group.id());
     }
 
-    public String getPhones(ContactData contact) {
-        return manager.driver.findElement(By.xpath(
-                String.format("//input[@id='%s']/../../td[6]", contact.id()))).getText();
-    }
+//    public String getPhones(ContactData contact) {
+//        return manager.driver.findElement(By.xpath(
+//                String.format("//input[@id='%s']/../../td[6]", contact.id()))).getText();
+//    }
 
+    @Step
     public Map<String, String> getPhones() {
         var result = new HashMap<String, String>();
         List<WebElement> rows = manager.driver.findElements(By.name("entry"));
@@ -197,6 +204,7 @@ public class ContactHelper extends HelperBase {
         return result;
     }
 
+    @Step
     public Object getInfoContactEditPage(int index) {
         openHomePage();
         initContactModification(index);
