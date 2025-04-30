@@ -77,11 +77,11 @@ public class ContactHelper extends HelperBase {
 
     @Step
     private void selectContact(ContactData contact) {
-//        WebDriverWait wait = new WebDriverWait(manager.driver, Duration.ofSeconds(10));
-//        WebElement element = wait.until(
-//                ExpectedConditions.elementToBeClickable(By.cssSelector(String.format("input[value='%s']", contact.id()))));
-//        element.click();
-        click(By.cssSelector(String.format("input[value='%s']", contact.id())));
+        WebDriverWait wait = new WebDriverWait(manager.driver, Duration.ofSeconds(10));
+        WebElement element = wait.until(
+                ExpectedConditions.elementToBeClickable(By.cssSelector(String.format("input[value='%s']", contact.id()))));
+        element.click();
+       // click(By.cssSelector(String.format("input[value='%s']", contact.id())));
     }
 
     public int getCount() {
