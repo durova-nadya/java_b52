@@ -1,2 +1,3 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
 "","19055","canAddContactInGroup()","","Wed Apr 30 18:27:36 MSK 2025","passed","Wed Apr 30 18:27:55 MSK 2025","","ru.stqa.addressbook.tests.ContactsInGroups","ru.stqa.addressbook.tests.ContactsInGroups","canAddContactInGroup"
+"","21316","canModificationContact()","","Wed Apr 30 22:41:20 MSK 2025","passed","Wed Apr 30 22:41:42 MSK 2025","","ru.stqa.addressbook.tests.ContactModificationTests","ru.stqa.addressbook.tests.ContactModificationTests","canModificationContact"

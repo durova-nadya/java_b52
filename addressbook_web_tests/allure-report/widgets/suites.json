@@ -1,1 +1,1 @@
-{"total":1,"items":[{"uid":"f1255cc28b6a647be756df9eba5358b1","name":"ru.stqa.addressbook.tests.ContactsInGroups","statistic":{"failed":0,"broken":0,"skipped":0,"passed":1,"unknown":0,"total":1}}]}
+{"total":2,"items":[{"uid":"f1255cc28b6a647be756df9eba5358b1","name":"ru.stqa.addressbook.tests.ContactsInGroups","statistic":{"failed":0,"broken":0,"skipped":0,"passed":1,"unknown":0,"total":1}},{"uid":"97b6ec8e722f3d99f4624355715987ef","name":"ru.stqa.addressbook.tests.ContactModificationTests","statistic":{"failed":0,"broken":0,"skipped":0,"passed":1,"unknown":0,"total":1}}]}

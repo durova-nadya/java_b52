@@ -1,1 +1,1 @@
-[{"uid":"ea5f3e5be12c8d3e","name":"canAddContactInGroup()","time":{"start":1746026856506,"stop":1746026875561,"duration":19055},"status":"passed","severity":"normal"}]
+[{"uid":"d2c6e5300af5a9b3","name":"canAddContactInGroup()","time":{"start":1746026856506,"stop":1746026875561,"duration":19055},"status":"passed","severity":"normal"},{"uid":"3ee37996aae823c3","name":"canModificationContact()","time":{"start":1746042080844,"stop":1746042102160,"duration":21316},"status":"passed","severity":"normal"}]
