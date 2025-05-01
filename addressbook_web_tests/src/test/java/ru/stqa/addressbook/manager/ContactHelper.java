@@ -77,11 +77,11 @@ public class ContactHelper extends HelperBase {
 
     @Step
     private void selectContact(ContactData contact) {
-        WebDriverWait wait = new WebDriverWait(manager.driver, Duration.ofSeconds(10));
-        WebElement element = wait.until(
-                ExpectedConditions.elementToBeClickable(By.cssSelector(String.format("input[value='%s']", contact.id()))));
-        element.click();
-       // click(By.cssSelector(String.format("input[value='%s']", contact.id())));
+//        WebDriverWait wait = new WebDriverWait(manager.driver, Duration.ofSeconds(10));
+//        WebElement element = wait.until(
+//                ExpectedConditions.elementToBeClickable(By.cssSelector(String.format("input[value='%s']", contact.id()))));
+//        element.click();
+        click(By.cssSelector(String.format("input[value='%s']", contact.id())));
     }
 
     public int getCount() {
@@ -113,7 +113,6 @@ public class ContactHelper extends HelperBase {
 
     private void initContactCreation() {
         click(By.linkText("add new"));
-
     }
 
     public void removeAllContact() {
@@ -198,6 +197,10 @@ public class ContactHelper extends HelperBase {
         new Select(manager.driver.findElement(By.name("group"))).selectByValue(group.id());
     }
 
+    private void selectFilterToGroupNone() {
+        new Select(manager.driver.findElement(By.name("group"))).selectByValue("[none]");
+    }
+
 //    public String getPhones(ContactData contact) {
 //        return manager.driver.findElement(By.xpath(
 //                String.format("//input[@id='%s']/../../td[6]", contact.id()))).getText();
@@ -243,5 +246,25 @@ public class ContactHelper extends HelperBase {
         var contact = new ContactData().withId(id).withFirstName(firstname).withLastName(lastname).withAddress(address).withEmail(email).withMobile(phone);
         return contact;
     }
+
+    public void contactPutIntoGroup(GroupData group) {
+        openHomePage();
+        selectFilterToGroupNone();
+        checkCountContactInList();
+        selectFilterToGroupNone();
+        selectOnceContact();
+        selectGroupFromHomePage(group);
+        addContactToGroup();
+        openPageContactsInGroup(group);
+    }
+
+    private void checkCountContactInList() {
+        int countContacts = manager.driver.findElements(By.name("selected[]")).size();
+        if (countContacts == 0) {
+            manager.hbm().createContact(new ContactData("", "Kate", "Bolt", "Spb", "pushkin.as@mail.ru", "1474147", "7452775", "7578575", ""));
+        }
+    }
+
+    private void selectOnceContact() { click(By.name("selected[]"));}
 }
 

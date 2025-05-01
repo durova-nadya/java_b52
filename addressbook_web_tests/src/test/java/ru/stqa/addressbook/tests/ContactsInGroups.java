@@ -33,6 +33,22 @@ public class ContactsInGroups extends TestBase{
 
 
     @Test
+    void canAddContactInGroup2() {
+        if (app.hbm().getContactCount() == 0) {
+            app.hbm().createContact(new ContactData("", "Sacha", "Puh", "Spb", "pushkin.as@mail.ru", "1474147", "7452775", "7578575", ""));
+        }
+        if (app.hbm().getGroupCount() == 0) {
+            app.hbm().createGroup(new GroupData("", "Friends", "Best friends", "comment"));
+        }
+        var group = app.hbm().getGroupList().get(0);
+        var oldRelated = app.hbm().getContactsInGroup(group);
+        app.contacts().contactPutIntoGroup(group);
+        var newRelated = app.hbm().getContactsInGroup(group);
+        Assertions.assertEquals(oldRelated.size() + 1, newRelated.size());
+    }
+
+
+    @Test
     void canAddContactInGroup() {
 
         boolean isGroup = false;
@@ -82,7 +98,6 @@ public class ContactsInGroups extends TestBase{
             Assertions.assertEquals(Set.copyOf(expectedList), Set.copyOf(newRelated));
         });
     }
-
 
 
     @Test
